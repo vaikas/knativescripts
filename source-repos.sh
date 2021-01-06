@@ -90,7 +90,19 @@ ES_RABBITMQ_LOGS=`git log --after=$DATE -- \
   . `
 popd
 
-echo "$E_LOGS \n $EC_LOGS \n $ES_DISCOVERY_LOGS \n $ES_SAMPLE_LOGS \n $ES_CEPH_LOGS \n $ES_SQS_LOGS \n $ES_PROM_LOGS \n $ES_GITLAB_LOGS \n $ES_GITHUB_LOGS \n $ES_COUCHDB_LOGS \n $ES_CAMEL_LOGS \n $ES_RABBITMQ_LOGS" \
+git clone https://github.com/knative-sandbox/eventing-redis.git
+pushd $KN_SANDBOX_PATH/eventing-redis
+ES_REDIS_LOGS=`git log --after=$DATE -- \
+  source `
+popd
+
+git clone https://github.com/knative-sandbox/eventing-kafka.git
+pushd $KN_SANDBOX_PATH/eventing-kafka
+ES_KAFKA_LOGS=`git log --after=$DATE -- \
+  source `
+popd
+
+echo "$E_LOGS \n $EC_LOGS \n $ES_DISCOVERY_LOGS \n $ES_SAMPLE_LOGS \n $ES_CEPH_LOGS \n $ES_SQS_LOGS \n $ES_PROM_LOGS \n $ES_GITLAB_LOGS \n $ES_GITHUB_LOGS \n $ES_COUCHDB_LOGS \n $ES_CAMEL_LOGS \n $ES_RABBITMQ_LOGS \n $ES_REDIS_LOGS \n $ES_KAFKA_LOGS" \
    | grep Author | cut -f2 -d: | sort | uniq -c | sort -k1 -n -r  | head -n 25
 
 
